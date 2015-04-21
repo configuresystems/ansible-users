@@ -39,7 +39,7 @@
               state=present
               create=yes
               line="{{ item.username }}   ALL=(ALL) NOPASSWD:ALL"
-  when: item.is_sudo == True
+  when: item.is_sudo is defined
   with_items: users
   sudo: yes
   tags: ['users','configuration']
