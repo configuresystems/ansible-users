@@ -34,6 +34,26 @@
   sudo: yes
   tags: ['users','configuration']
 
+- name: transfer existing ssh keypair
+  copy: src=id_rsa.pub
+        dest=/home/{{ item.username }}/.ssh/id_rsa.pub
+        mode=644
+        owner={{ item.username }}
+        group={{ item.username }}
+  with_items: users
+  sudo: yes
+  tags: ['users','configuration']
+
+- name: transfer existing ssh keypair private
+  copy: src=id_rsa
+        dest=/home/{{ item.username }}/.ssh/id_rsa
+        mode=600
+        owner={{ item.username }}
+        group={{ item.username }}
+  with_items: users
+  sudo: yes
+  tags: ['users','configuration']
+
 - name: add to sudoers list
   lineinfile: dest=/etc/sudoers.d/{{ item.username }}
               state=present
